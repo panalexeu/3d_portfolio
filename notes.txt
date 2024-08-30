@@ -20,3 +20,20 @@ loader.load(
 
 
 keyboard.rotateY(3.14);
+
+// display
+const displayDiv = document.createElement('div');
+displayDiv.textContent = 'LOREM IPSUM BITCH';
+displayDiv.style.backgroundColor = 'blue'
+
+const displayObj = new CSS2DObject(displayDiv);
+displayObj.position.set(-2, 0, 0);
+displayObj.rotateY(3.15)
+displayObj.center.set(0, 0);
+scene.add(displayObj);
+
+let css2DRenderer = new CSS2DRenderer();
+css2DRenderer.setSize(window.innerWidth, window.innerHeight);
+css2DRenderer.domElement.style.position = 'absolute';
+css2DRenderer.domElement.style.top = '0px';
+document.body.appendChild(css2DRenderer.domElement);
