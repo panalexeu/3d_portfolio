@@ -1,3 +1,5 @@
+import {playSound} from "./sound";
+
 const pushPower = 0.05;
 let prevEvent, prevCode;
 
@@ -17,9 +19,18 @@ export function handleKeyEvent(event, keyboard_model) {
             prevCode = event.code;
 
             switch (event.type) {
-                case 'keydown':
+                case 'keydown': {
                     key_model.position.y -= pushPower;
+
+                    // handling sound
+                    if (event.code === 'Space') {
+                        playSound('/sounds/spacebar_press.mp3');
+                    } else {
+                        playSound('/sounds/button_press.mp3');
+                    }
+
                     break;
+                }
                 case 'keyup':
                     key_model.position.y += pushPower;
                     prevCode = undefined;

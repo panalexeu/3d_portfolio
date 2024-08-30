@@ -51,8 +51,28 @@ let keyboard;
 loadGltf(
     '/keyboard.gltf',
     scene,
-    (model) => { keyboard = model; },
+    (model) => {
+        keyboard = model;
+        keyboard.rotateY(3.14);
+    },
 );
+
+let floppy;
+loadGltf(
+    '/floppy_disk_shades.gltf',
+    scene,
+    (model) => {
+        floppy = model;
+
+        // global position
+        floppy.position.z = 3;
+
+        // main floppy frame
+        const floppy_frame = floppy.getObjectByName('main_frame');
+        floppy_frame.material = floppy_frame.material.clone();
+        floppy_frame.material.color.set(0x0000ff);
+    }
+)
 
 // handling keyboard
 addEventListener('keydown', (event) => handleKeyEvent(event, keyboard));
