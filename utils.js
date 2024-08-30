@@ -1,17 +1,15 @@
-import {GLTFLoader} from "three/addons/loaders/GLTFLoader";
+import { GLTFLoader} from "three/addons";
 
 const gltfLoader = new GLTFLoader();
-export function load_gltf(path, scene) {
-    let model;
-
+export function loadGltf(path, scene, onLoaded) {
     gltfLoader.load(
-        '/keyboard.gltf',
+        path,
         (gltf) => {
             const root = gltf.scene;
-            model = root;
             scene.add(root);
-        }
+            onLoaded(root);
+        },
+        undefined,
+        (err) => {console.log(err)}
     )
-
-    return model;
 }

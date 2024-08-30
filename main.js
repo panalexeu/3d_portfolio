@@ -1,10 +1,12 @@
 import * as THREE from 'three';
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {OrbitControls} from "three/addons";
 import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
 import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {RenderPixelatedPass} from 'three/addons';
+
+import {loadGltf} from '/utils';
+import {handleKeyDown} from "./keyboard";
 
 // setting up scene, camera, renderer, controls
 const scene = new THREE.Scene();
@@ -32,18 +34,6 @@ scene.add(axesHelper)
 // controller
 const control = new OrbitControls(camera, renderer.domElement);
 
-
-const gltfLoader = new GLTFLoader();
-let keyboard;
-gltfLoader.load(
-    '/keyboard.gltf',
-    (gltf) => {
-        const root = gltf.scene;
-        keyboard = root;
-        scene.add(root);
-    }
-)
-
 // postprocessing
 const composer = new EffectComposer(renderer);
 
@@ -55,6 +45,18 @@ composer.addPass(renderPixelatedPass);
 
 const outputPass = new OutputPass();
 composer.addPass(outputPass);
+
+// models
+let keyboard;
+loadGltf(
+    '/keyboard.gltf',
+    scene,
+    (model) => { keyboard = model; },
+);
+
+// handling input
+addEventListener('keydown', (event) => handleKeyDown(event, keyboard))
+
 
 // animation loop
 function animate() {
