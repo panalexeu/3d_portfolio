@@ -6,7 +6,7 @@ import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {RenderPixelatedPass} from 'three/addons';
 
 import {loadGltf} from '/utils';
-import {handleKeyDown} from "./keyboard";
+import {handleKeyEvent} from "./keyboard";
 
 // setting up scene, camera, renderer, controls
 const scene = new THREE.Scene();
@@ -54,9 +54,9 @@ loadGltf(
     (model) => { keyboard = model; },
 );
 
-// handling input
-addEventListener('keydown', (event) => handleKeyDown(event, keyboard))
-
+// handling keyboard
+addEventListener('keydown', (event) => handleKeyEvent(event, keyboard));
+addEventListener('keyup', (event) => handleKeyEvent(event, keyboard));
 
 // animation loop
 function animate() {
