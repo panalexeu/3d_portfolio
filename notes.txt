@@ -1,0 +1,22 @@
+const loader = new GLTFLoader();
+loader.load(
+    "/floppy_disk_shades.gltf",
+    (gltf) => {
+        const floppy = gltf.scene;
+        scene.add(floppy);
+
+        // global position
+        floppy.position.z = 3;
+
+        // main floppy frame
+        const floppy_frame = floppy.getObjectByName('main_frame');
+        floppy_frame.material = floppy_frame.material.clone();
+        floppy_frame.material.color.set(0x0000ff);
+    },
+(error) => {
+        console.error(error);
+    }
+);
+
+
+keyboard.rotateY(3.14);
