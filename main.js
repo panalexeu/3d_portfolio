@@ -7,7 +7,7 @@ import {RenderPixelatedPass} from 'three/addons';
 import {CSS2DRenderer, CSS2DObject} from "three/addons";
 
 import {loadGltf} from '/utils';
-import {handleKeyEvent} from "./keyboard";
+import {KeyboardHandler} from "./keyboard";
 
 // setting up scene, camera, renderers, controls
 const scene = new THREE.Scene();
@@ -54,13 +54,13 @@ composer.addPass(renderPixelatedPass);
 const outputPass = new OutputPass();
 composer.addPass(outputPass);
 
-// css2d objects creation
+// CSS2d object display creation
 const displayDiv = document.createElement('div');
-displayDiv.textContent = 'LOREM IPSUM BITCH';
+displayDiv.textContent = '';
 displayDiv.style.backgroundColor = 'white';
 
 const displayObj = new CSS2DObject(displayDiv);
-displayObj.position.set(1, 1, 1);
+displayObj.position.set(1, 1, 0);
 scene.add(displayObj)
 
 // models
@@ -92,8 +92,20 @@ loadGltf(
 )
 
 // handling keyboard
-addEventListener('keydown', (event) => handleKeyEvent(event, keyboard, ));
-addEventListener('keyup', (event) => handleKeyEvent(event, keyboard, ));
+const keyboardHandler = new KeyboardHandler(displayDiv);
+
+addEventListener('keydown', (event) =>
+    keyboardHandler.handleKeyEvent(
+        event,
+        keyboard
+    )
+);
+addEventListener('keyup', (event) =>
+    keyboardHandler.handleKeyEvent(
+        event,
+        keyboard
+    )
+);
 
 // animation loop
 function animate() {
