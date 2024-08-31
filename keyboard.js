@@ -6,8 +6,8 @@ export class KeyboardHandler {
     #prevEvent = null;
     #prevCode = null;
 
-    constructor(displayDiv) {
-        this.displayDiv = displayDiv;
+    constructor(displayArea) {
+        this.displayArea = displayArea;
     }
 
     handleKeyEvent(event, keyboardModel) {
@@ -36,7 +36,7 @@ export class KeyboardHandler {
                             playSound('/sounds/button_press.mp3');
                         }
 
-                        this.#handleDisplayDivText(event.key);
+                        this.#handleDisplayAreaValue(event.key);
 
                         break;
                     }
@@ -49,13 +49,13 @@ export class KeyboardHandler {
         }
     }
 
-    #handleDisplayDivText(eventKey) {
+    #handleDisplayAreaValue(eventKey) {
         if (eventKey.length === 1) {
-            this.displayDiv.textContent += eventKey;
+            this.displayArea.value += eventKey;
         } else if (eventKey === 'Enter') {
-            this.displayDiv.textContent += '\n';
+            this.displayArea.value += '\n';
         } else if (eventKey === 'Backspace') {
-            this.displayDiv.textContent = this.displayDiv.textContent.slice(0, -1);
+            this.displayArea.value = this.displayArea.value.slice(0, -1);
         }
     }
 }

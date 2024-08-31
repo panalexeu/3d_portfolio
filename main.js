@@ -55,12 +55,13 @@ const outputPass = new OutputPass();
 composer.addPass(outputPass);
 
 // CSS2d object display creation
-const displayDiv = document.createElement('div');
-displayDiv.textContent = '';
-displayDiv.style.backgroundColor = 'white';
+const displayArea = document.createElement('textarea');
+displayArea.style.width = '600px';
+displayArea.style.height = '100px';
+displayArea.value = 'Hello, World!';
 
-const displayObj = new CSS2DObject(displayDiv);
-displayObj.position.set(1, 1, 0);
+const displayObj = new CSS2DObject(displayArea);
+displayObj.position.set(1, 1.2, 0);
 scene.add(displayObj)
 
 // models
@@ -92,7 +93,7 @@ loadGltf(
 )
 
 // handling keyboard
-const keyboardHandler = new KeyboardHandler(displayDiv);
+const keyboardHandler = new KeyboardHandler(displayArea);
 
 addEventListener('keydown', (event) =>
     keyboardHandler.handleKeyEvent(
