@@ -23,7 +23,7 @@ export function handleKeyEvent(event, keyboard_model) {
                     key_model.position.y -= pushPower;
 
                     // handling sound
-                    if (event.code === 'Space') {
+                    if (event.code === 'Space' || event.code === 'Enter') {
                         playSound('/sounds/spacebar_press.mp3');
                     } else {
                         playSound('/sounds/button_press.mp3');
