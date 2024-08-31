@@ -56,6 +56,7 @@ const outputPass = new OutputPass();
 composer.addPass(outputPass);
 
 // CSS2d object display creation
+// TODO rework this as css in styles css file
 const displayArea = document.createElement('textarea');
 displayArea.style.width = '600px';
 displayArea.style.height = '100px';
@@ -129,7 +130,6 @@ addEventListener('keyup', (event) =>
 // handling mouse
 addEventListener('mousedown', (event) => handleMouseEvent(event, mouse));
 addEventListener('mouseup', (event) => handleMouseEvent(event, mouse));
-
 
 // animation loop
 function animate() {
