@@ -58,7 +58,12 @@ composer.addPass(outputPass);
 const displayArea = document.createElement('textarea');
 displayArea.style.width = '600px';
 displayArea.style.height = '100px';
-displayArea.value = 'Hello, World!';
+displayArea.style.borderStyle = 'dashed';
+displayArea.style.borderColor = '#00ff00'
+displayArea.style.color = '#00ff00';
+displayArea.style.fontFamily = 'Monocraft';
+displayArea.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+displayArea.value = 'USE THE KEYBOARD';
 
 const displayObj = new CSS2DObject(displayArea);
 displayObj.position.set(1, 1.2, 0);
