@@ -4,11 +4,12 @@ import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
 import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {RenderPixelatedPass} from 'three/addons';
+import {CSS2DRenderer, CSS2DObject} from "three/addons";
 
 import {loadGltf} from '/utils';
 import {handleKeyEvent} from "./keyboard";
 
-// setting up scene, camera, renderer, controls
+// setting up scene, camera, renderers, controls
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
@@ -22,6 +23,13 @@ camera.position.x = -5;
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+
+const css2dRenderer = new CSS2DRenderer();
+css2dRenderer.setSize(window.innerWidth, window.innerHeight);
+css2dRenderer.domElement.style.position = 'absolute';
+css2dRenderer.domElement.style.top = '0px';
+css2dRenderer.domElement.style.pointerEvents = 'none';  // important thing, allows orbit controls to works with css2d renderer
+document.body.appendChild(css2dRenderer.domElement);
 
 // ambient light
 const light = new THREE.AmbientLight(0x404040, 25);
@@ -45,6 +53,15 @@ composer.addPass(renderPixelatedPass);
 
 const outputPass = new OutputPass();
 composer.addPass(outputPass);
+
+// css2d objects creation
+const displayDiv = document.createElement('div');
+displayDiv.textContent = 'LOREM IPSUM BITCH';
+displayDiv.style.backgroundColor = 'white';
+
+const displayObj = new CSS2DObject(displayDiv);
+displayObj.position.set(1, 1, 1);
+scene.add(displayObj)
 
 // models
 let keyboard;
@@ -75,13 +92,18 @@ loadGltf(
 )
 
 // handling keyboard
-addEventListener('keydown', (event) => handleKeyEvent(event, keyboard));
-addEventListener('keyup', (event) => handleKeyEvent(event, keyboard));
+addEventListener('keydown', (event) => handleKeyEvent(event, keyboard, ));
+addEventListener('keyup', (event) => handleKeyEvent(event, keyboard, ));
 
 // animation loop
 function animate() {
-    composer.render();
     control.update();
+    render();
+}
+
+function render() {
+    composer.render();
+    css2dRenderer.render(scene, camera);
 }
 
 renderer.setAnimationLoop(animate);
