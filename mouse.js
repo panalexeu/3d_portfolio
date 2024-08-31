@@ -19,6 +19,4 @@ export function handleMouseEvent(event, mouseModel) {
             }
         }
     }
-
-    console.log(event);
 }
