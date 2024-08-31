@@ -8,6 +8,7 @@ import {CSS2DRenderer, CSS2DObject} from "three/addons";
 
 import {loadGltf} from '/utils';
 import {KeyboardHandler} from "./keyboard";
+import {handleMouseEvent} from './mouse';
 
 // setting up scene, camera, renderers, controls
 const scene = new THREE.Scene();
@@ -88,7 +89,9 @@ loadGltf(
         floppy = model;
 
         // global position
-        floppy.position.z = 3;
+        floppy.position.z = -2.8;
+        floppy.position.x = -0.5;
+        floppy.rotateZ(-1.5);
 
         // main floppy frame
         const floppy_frame = floppy.getObjectByName('main_frame');
@@ -96,6 +99,16 @@ loadGltf(
         floppy_frame.material.color.set(0x0000ff);
     }
 )
+
+let mouse;
+loadGltf(
+    '/mouse.gltf',
+    scene,
+    (model) => {
+        mouse = model;
+        mouse.position.z = 3;
+    }
+);
 
 // handling keyboard
 const keyboardHandler = new KeyboardHandler(displayArea);
@@ -112,6 +125,11 @@ addEventListener('keyup', (event) =>
         keyboard
     )
 );
+
+// handling mouse
+addEventListener('mousedown', (event) => handleMouseEvent(event, mouse));
+addEventListener('mouseup', (event) => handleMouseEvent(event, mouse));
+
 
 // animation loop
 function animate() {
