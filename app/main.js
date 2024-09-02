@@ -6,7 +6,7 @@ import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {RenderPixelatedPass} from 'three/addons';
 import {CSS2DRenderer, CSS2DObject} from "three/addons";
 
-import {loadGltf} from '/utils';
+import {loadGltf} from '/home/oleksii/js/floppy_disk/app/utils';
 import {KeyboardHandler} from "./keyboard";
 import {handleMouseEvent} from './mouse';
 
@@ -84,7 +84,7 @@ loadGltf(
 
 let floppy;
 loadGltf(
-    '/floppy_disk_shades.gltf',
+    '/floppy_disk.gltf',
     scene,
     (model) => {
         floppy = model;
@@ -110,6 +110,16 @@ loadGltf(
         mouse.position.z = 3;
     }
 );
+
+let macintosh;
+loadGltf(
+    '/macintosh.gltf',
+    scene,
+    (model) => {
+        macintosh = model;
+        macintosh.rotateY(3.14);
+    }
+)
 
 // handling keyboard
 const keyboardHandler = new KeyboardHandler(displayArea);
